@@ -4,7 +4,13 @@ import { motion } from "framer-motion";
 
 const ResumeUpload = ({ setResumeId, setParsedSkills, setParsedText }) => {
   const [file, setFile] = useState(null);
-  const [parsedData, setParsedData] = useState({ skills: [], email: "", phone: "", links: [], text: "" });
+  const [parsedData, setParsedData] = useState({
+    skills: [],
+    email: "",
+    phone: "",
+    links: [],
+    text: "",
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -32,9 +38,12 @@ const ResumeUpload = ({ setResumeId, setParsedSkills, setParsedText }) => {
       setError("");
 
       const response = await axios.post(
-        "https://jobscibe.onrender.com//api/resume/upload",
+        "https://jobscibe.onrender.com/api/resume/upload",
         formData,
-        { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+          withCredentials: true,
+        }
       );
 
       const data = response.data?.data?.parsedData;
@@ -48,13 +57,12 @@ const ResumeUpload = ({ setResumeId, setParsedSkills, setParsedText }) => {
         email: data.email || "",
         phone: data.phone || "",
         links: Array.isArray(data.links) ? data.links : [],
-        text
+        text,
       });
 
       setResumeId(id);
       setParsedSkills(skills);
       setParsedText(text);
-
     } catch (err) {
       console.error(err);
       setError("Failed to upload resume. Try again.");
@@ -95,7 +103,9 @@ const ResumeUpload = ({ setResumeId, setParsedSkills, setParsedText }) => {
               onClick={handleUpload}
               disabled={loading}
               className={`w-full py-3 rounded-md font-semibold transition-colors ${
-                loading ? "bg-gray-500 cursor-not-allowed" : "bg-indigo-600 hover:bg-indigo-500 text-white"
+                loading
+                  ? "bg-gray-500 cursor-not-allowed"
+                  : "bg-indigo-600 hover:bg-indigo-500 text-white"
               }`}
             >
               {loading ? "Uploading..." : "Upload & Parse"}
@@ -105,38 +115,51 @@ const ResumeUpload = ({ setResumeId, setParsedSkills, setParsedText }) => {
         )}
 
         {parsedData.skills.length > 0 && (
-  <section className="bg-gray-800 rounded-xl p-6 space-y-5 border border-gray-700 max-h-[60vh] overflow-y-auto">
-    <h2 className="text-2xl font-bold text-gray-100 border-b pb-2">Parsed Resume Details</h2>
+          <section className="bg-gray-800 rounded-xl p-6 space-y-5 border border-gray-700 max-h-[60vh] overflow-y-auto">
+            <h2 className="text-2xl font-bold text-gray-100 border-b pb-2">
+              Parsed Resume Details
+            </h2>
 
-    <div>
-      <h3 className="font-semibold text-gray-200 mb-2">Skills:</h3>
-      <div className="flex flex-col gap-2 max-h-48 overflow-y-auto">
-        {parsedData.skills.map((skill, idx) => (
-          <span
-            key={idx}
-            className="bg-indigo-600 text-white px-4 py-1 rounded-full text-sm"
-          >
-            {skill}
-          </span>
-        ))}
-      </div>
-    </div>
+            <div>
+              <h3 className="font-semibold text-gray-200 mb-2">Skills:</h3>
+              <div className="flex flex-col gap-2 max-h-48 overflow-y-auto">
+                {parsedData.skills.map((skill, idx) => (
+                  <span
+                    key={idx}
+                    className="bg-indigo-600 text-white px-4 py-1 rounded-full text-sm"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
 
-    {parsedData.email && <p><strong>Email:</strong> {parsedData.email}</p>}
-    {parsedData.phone && <p><strong>Phone:</strong> {parsedData.phone}</p>}
-    {parsedData.links.length > 0 && <p><strong>Links:</strong> {parsedData.links.join(", ")}</p>}
+            {parsedData.email && (
+              <p>
+                <strong>Email:</strong> {parsedData.email}
+              </p>
+            )}
+            {parsedData.phone && (
+              <p>
+                <strong>Phone:</strong> {parsedData.phone}
+              </p>
+            )}
+            {parsedData.links.length > 0 && (
+              <p>
+                <strong>Links:</strong> {parsedData.links.join(", ")}
+              </p>
+            )}
 
-    <div className="flex justify-end mt-4">
-      <button
-        onClick={handleClear}
-        className="bg-red-500 text-white px-5 py-2 rounded-md hover:bg-red-400 transition-colors"
-      >
-        Clear
-      </button>
-    </div>
-  </section>
-)}
-
+            <div className="flex justify-end mt-4">
+              <button
+                onClick={handleClear}
+                className="bg-red-500 text-white px-5 py-2 rounded-md hover:bg-red-400 transition-colors"
+              >
+                Clear
+              </button>
+            </div>
+          </section>
+        )}
       </motion.div>
     </div>
   );

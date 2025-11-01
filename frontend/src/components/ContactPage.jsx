@@ -23,10 +23,10 @@ const ContactPage = () => {
 
     try {
       await emailjs.send(
-        "service_x16cpnk", // service ID
-        "template_bzt0uxd", // template ID
+        "service_kn36jzm", // service ID
+        "template_xsit0ps", // template ID
         formData,
-        "3D4s8dXBVzSuUQ_S6" // public key
+        "_fIKFSX0WvuPloW-X" // public key
       );
       setSuccess("Message sent successfully!");
       setFormData({ name: "", email: "", subject: "", message: "" });
@@ -40,7 +40,6 @@ const ContactPage = () => {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364] text-gray-100 px-6 md:px-12 py-32 overflow-hidden">
-
       {/* ✨ Floating gradient orbs */}
       <div className="absolute top-[-10rem] left-[-5rem] w-80 h-80 bg-indigo-500/40 rounded-full blur-[100px] animate-[float_8s_ease-in-out_infinite]"></div>
       <div className="absolute bottom-[-10rem] right-[-5rem] w-96 h-96 bg-pink-500/40 rounded-full blur-[120px] animate-[float-rev_10s_ease-in-out_infinite]"></div>
@@ -104,7 +103,9 @@ const ContactPage = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className={`mt-4 text-center font-medium ${
-                success.includes("successfully") ? "text-green-400" : "text-red-400"
+                success.includes("successfully")
+                  ? "text-green-400"
+                  : "text-red-400"
               }`}
             >
               {success}
@@ -115,7 +116,7 @@ const ContactPage = () => {
         {/* Social Links */}
         <motion.div className="mt-8 flex justify-center space-x-6 text-2xl text-gray-100">
           <a
-            href="https://github.com/saurabh-singh740"
+            href="https://github.com/amishsheikh"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-indigo-400 transition"
@@ -123,7 +124,7 @@ const ContactPage = () => {
             <FaGithub />
           </a>
           <a
-            href="https://instagram.com/saurabhsingh0.1"
+            href="https://www.instagram.com/aamishsheikh_/"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-pink-500 transition"
@@ -131,7 +132,7 @@ const ContactPage = () => {
             <FaInstagram />
           </a>
           <a
-            href="https://x.com/saurabhnxt/"
+            href="https://x.com/Amishsheikh5"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-blue-400 transition"
