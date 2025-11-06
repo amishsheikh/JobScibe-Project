@@ -14,7 +14,9 @@ const OptimiseResume = ({ resumeId, parsedSkills }) => {
       return;
     }
     if (!resumeId || !parsedSkills || parsedSkills.length === 0) {
-      setError("Resume ID or parsed skills are missing. Upload a valid resume first.");
+      setError(
+        "Resume ID or parsed skills are missing. Upload a valid resume first."
+      );
       return;
     }
 
@@ -23,16 +25,21 @@ const OptimiseResume = ({ resumeId, parsedSkills }) => {
       setError("");
 
       const response = await axios.post(
-        "https://jobscibe.onrender.com/api/ai/optimize",
+        `${import.meta.env.VITE_API_URL}/api/ai/optimize`,
         { resumeId, parsedSkills, jobDescription },
-        { headers: { "Content-Type": "application/json" }, withCredentials: true }
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       );
 
       if (response.data) setResult(response.data);
       else setError("No data returned from backend.");
     } catch (err) {
       console.error(err);
-      setError(err.response?.data?.message || "Failed to optimise resume. Try again.");
+      setError(
+        err.response?.data?.message || "Failed to optimise resume. Try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -50,7 +57,8 @@ const OptimiseResume = ({ resumeId, parsedSkills }) => {
       style={{
         minHeight: "350px",
         maxHeight: "700px",
-        background: "linear-gradient(to bottom right, #0f2027, #203a43, #2c5364)"
+        background:
+          "linear-gradient(to bottom right, #0f2027, #203a43, #2c5364)",
       }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -91,17 +99,38 @@ const OptimiseResume = ({ resumeId, parsedSkills }) => {
             &times;
           </button>
 
-          <h3 className="font-semibold mb-2 text-white">Optimisation Result:</h3>
+          <h3 className="font-semibold mb-2 text-white">
+            Optimisation Result:
+          </h3>
           <div className="space-y-2 text-sm">
-            {result.summary && <p><strong>Summary:</strong> {result.summary}</p>}
-            {result.atsScore !== undefined && <p><strong>ATS Score:</strong> {result.atsScore}</p>}
-            {result.topSkills?.length > 0 && <p><strong>Top Skills:</strong> {result.topSkills.join(", ")}</p>}
-            {result.missingSkills?.length > 0 && <p><strong>Missing Skills:</strong> {result.missingSkills.join(", ")}</p>}
+            {result.summary && (
+              <p>
+                <strong>Summary:</strong> {result.summary}
+              </p>
+            )}
+            {result.atsScore !== undefined && (
+              <p>
+                <strong>ATS Score:</strong> {result.atsScore}
+              </p>
+            )}
+            {result.topSkills?.length > 0 && (
+              <p>
+                <strong>Top Skills:</strong> {result.topSkills.join(", ")}
+              </p>
+            )}
+            {result.missingSkills?.length > 0 && (
+              <p>
+                <strong>Missing Skills:</strong>{" "}
+                {result.missingSkills.join(", ")}
+              </p>
+            )}
             {result.suggestions?.length > 0 && (
               <div>
                 <strong>Suggestions:</strong>
                 <ul className="list-disc list-inside">
-                  {result.suggestions.map((sugg, idx) => <li key={idx}>{sugg}</li>)}
+                  {result.suggestions.map((sugg, idx) => (
+                    <li key={idx}>{sugg}</li>
+                  ))}
                 </ul>
               </div>
             )}

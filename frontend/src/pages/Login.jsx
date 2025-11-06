@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { motion } from "framer-motion";
 
 function Login() {
@@ -60,7 +60,7 @@ function Login() {
     setLoading(true);
     try {
       const res = await axios.post(
-        "https://jobscibe.onrender.com/api/auth/login",
+        `${import.meta.env.VITE_API_URL}/api/auth/login`,
         { email: formData.email, password: formData.password },
         { withCredentials: true }
       );
@@ -178,7 +178,10 @@ function Login() {
             {/* Footer */}
             <p className="mt-6 text-center text-sm text-gray-300">
               Don’t have an account?{" "}
-              <Link to="/register" className="text-indigo-400 font-medium hover:underline">
+              <Link
+                to="/register"
+                className="text-indigo-400 font-medium hover:underline"
+              >
                 Register
               </Link>
             </p>

@@ -9,22 +9,28 @@ const KeywordMatch = ({ parsedSkills = [] }) => {
   const [error, setError] = useState("");
 
   const handleSubmit = async () => {
-    if (!jobDescription.trim()) return setError("Please enter a job description.");
+    if (!jobDescription.trim())
+      return setError("Please enter a job description.");
 
     try {
       setLoading(true);
       setError("");
       const response = await axios.post(
-        "https://jobscibe.onrender.com/api/ai/match",
+        `${import.meta.env.VITE_API_URL}/api/ai/match`,
         { parsedSkills, jobDescription },
-        { headers: { "Content-Type": "application/json" }, withCredentials: true }
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       );
 
       if (response.data) setResult(response.data);
       else setError("No data returned from backend.");
     } catch (err) {
       console.error(err.response?.data || err);
-      setError(err.response?.data?.error || "Failed to match keywords. Try again.");
+      setError(
+        err.response?.data?.error || "Failed to match keywords. Try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -42,7 +48,8 @@ const KeywordMatch = ({ parsedSkills = [] }) => {
       style={{
         minHeight: "350px",
         maxHeight: "700px",
-        background: "linear-gradient(to bottom right, #0f2027, #203a43, #2c5364)"
+        background:
+          "linear-gradient(to bottom right, #0f2027, #203a43, #2c5364)",
       }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -84,14 +91,30 @@ const KeywordMatch = ({ parsedSkills = [] }) => {
           </button>
 
           <div className="space-y-2 text-sm">
-            {result.matchScore !== undefined && <p><strong>Match Score:</strong> {result.matchScore}</p>}
-            {result.matchingKeywords?.length > 0 && <p><strong>Matching Keywords:</strong> {result.matchingKeywords.join(", ")}</p>}
-            {result.missingKeywords?.length > 0 && <p><strong>Missing Keywords:</strong> {result.missingKeywords.join(", ")}</p>}
+            {result.matchScore !== undefined && (
+              <p>
+                <strong>Match Score:</strong> {result.matchScore}
+              </p>
+            )}
+            {result.matchingKeywords?.length > 0 && (
+              <p>
+                <strong>Matching Keywords:</strong>{" "}
+                {result.matchingKeywords.join(", ")}
+              </p>
+            )}
+            {result.missingKeywords?.length > 0 && (
+              <p>
+                <strong>Missing Keywords:</strong>{" "}
+                {result.missingKeywords.join(", ")}
+              </p>
+            )}
             {result.suggestions?.length > 0 && (
               <div>
                 <strong>Suggestions:</strong>
                 <ul className="list-disc list-inside">
-                  {result.suggestions.map((s, idx) => <li key={idx}>{s}</li>)}
+                  {result.suggestions.map((s, idx) => (
+                    <li key={idx}>{s}</li>
+                  ))}
                 </ul>
               </div>
             )}

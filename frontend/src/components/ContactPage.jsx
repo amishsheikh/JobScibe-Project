@@ -23,10 +23,10 @@ const ContactPage = () => {
 
     try {
       await emailjs.send(
-        "service_kn36jzm", // service ID
-        "template_xsit0ps", // template ID
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         formData,
-        "_fIKFSX0WvuPloW-X" // public key
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
       setSuccess("Message sent successfully!");
       setFormData({ name: "", email: "", subject: "", message: "" });

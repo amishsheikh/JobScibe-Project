@@ -34,7 +34,7 @@ function Register() {
 
     try {
       const res = await axios.post(
-        "https://jobscibe.onrender.com/api/auth/register",
+        `${import.meta.env.VITE_API_URL}/api/auth/register`,
         {
           name: formData.name,
           email: formData.email,
@@ -56,9 +56,10 @@ function Register() {
   };
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 
-    bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364] text-gray-100">
-
+    <div
+      className="relative flex min-h-screen items-center justify-center overflow-hidden px-4
+    bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364] text-gray-100"
+    >
       {/* ✨ Floating gradient orbs */}
       <div className="absolute top-[-10rem] left-[-5rem] w-80 h-80 bg-indigo-500/40 rounded-full blur-[100px] animate-[float_8s_ease-in-out_infinite]"></div>
       <div className="absolute bottom-[-10rem] right-[-5rem] w-96 h-96 bg-pink-500/40 rounded-full blur-[120px] animate-[float-rev_10s_ease-in-out_infinite]"></div>
@@ -168,7 +169,7 @@ function Register() {
             whileHover={{ scale: 1.05 }}
             type="submit"
             disabled={loading}
-            className="w-full py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-[0_0_20px_rgba(99,102,241,0.5)] 
+            className="w-full py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-[0_0_20px_rgba(99,102,241,0.5)]
             hover:shadow-[0_0_30px_rgba(236,72,153,0.6)] transition-all"
           >
             {loading ? "Registering..." : "Register"}
@@ -177,7 +178,10 @@ function Register() {
 
         <p className="mt-6 text-center text-sm text-gray-300">
           Already have an account?{" "}
-          <Link to="/login" className="text-indigo-400 font-medium hover:underline">
+          <Link
+            to="/login"
+            className="text-indigo-400 font-medium hover:underline"
+          >
             Login
           </Link>
         </p>
